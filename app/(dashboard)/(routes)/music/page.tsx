@@ -40,7 +40,7 @@ const MusicPage = () => {
 			setMusic(response.data.audio);
 
 			form.reset();
-		} catch (error) {
+		} catch (error: any) {
 			// TODO: Open pro model
 			if (error?.response?.status === 403) {
 				proModal.onOpen();

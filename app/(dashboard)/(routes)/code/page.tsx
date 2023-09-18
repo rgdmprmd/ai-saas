@@ -48,7 +48,7 @@ const CodePage = () => {
 			setMessages((current) => [...current, userMessage, response.data]);
 			// setMessages((current) => [...current, userMessage, { role: "bot", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore unde quasi iure." }]);
 			form.reset();
-		} catch (error) {
+		} catch (error: any) {
 			// TODO: Open pro model
 			if (error?.response?.status === 403) {
 				proModal.onOpen();

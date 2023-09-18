@@ -22,8 +22,8 @@ import { BotAvatar } from "@/components/bot-avatar";
 import { useProModal } from "@/hooks/use-pro-modal";
 
 const ConversationPage = () => {
-	const proModal = useProModal();
 	const router = useRouter();
+	const proModal = useProModal();
 	const [messages, setMessages] = useState<any[]>([]);
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -47,7 +47,7 @@ const ConversationPage = () => {
 			setMessages((current) => [...current, userMessage, response.data]);
 			// setMessages((current) => [...current, userMessage, { role: "bot", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore unde quasi iure." }]);
 			form.reset();
-		} catch (error) {
+		} catch (error: any) {
 			// TODO: Open pro model
 			if (error?.response?.status === 403) {
 				proModal.onOpen();
