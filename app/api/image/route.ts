@@ -1,3 +1,4 @@
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -17,11 +18,16 @@ export async function POST(req: Request) {
 		if (!amount) return new NextResponse("Amount is required", { status: 400 });
 		if (!resolution) return new NextResponse("Resolution is required", { status: 400 });
 
+		const freeTrial = await checkApiLimit();
+		if (!freeTrial) return new NextResponse("Free trial has expired", { status: 403 });
+
 		const response = await openai.images.generate({
 			prompt,
 			n: parseInt(amount, 10),
 			size: resolution,
 		});
+
+		await increaseApiLimit();
 
 		return NextResponse.json(response.data);
 	} catch (error) {

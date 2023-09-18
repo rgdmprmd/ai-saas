@@ -1,3 +1,4 @@
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
@@ -13,12 +14,17 @@ export async function POST(req: Request) {
 		if (!userId) return new NextResponse("Unauthorized", { status: 401 });
 		if (!prompt) return new NextResponse("Messages are required", { status: 400 });
 
+		const freeTrial = await checkApiLimit();
+		if (!freeTrial) return new NextResponse("Free trial has expired", { status: 403 });
+
 		const response = await replicate.run("lucataco/animate-diff:1531004ee4c98894ab11f8a4ce6206099e732c1da15121987a8eef54828f0663", {
 			input: {
 				motion_module: "mm_sd_v14",
 				prompt,
 			},
 		});
+
+		await increaseApiLimit();
 
 		return NextResponse.json(response);
 	} catch (error) {
