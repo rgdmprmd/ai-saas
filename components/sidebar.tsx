@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import FreeCounter from "@/components/free-counter";
+import { FreeCounter } from "@/components/free-counter";
 
 import { usePathname } from "next/navigation";
 import { Montserrat } from "next/font/google";
@@ -60,7 +60,7 @@ interface SidebarProps {
 	apiLimitCount: number;
 }
 
-const Sidebar = ({ apiLimitCount = 0 }: SidebarProps) => {
+export const Sidebar = ({ apiLimitCount = 0 }: SidebarProps) => {
 	const pathname = usePathname();
 	return (
 		<div className="text-white space-y-4 py-4 flex flex-col h-full bg-[#111827]">
@@ -88,5 +88,3 @@ const Sidebar = ({ apiLimitCount = 0 }: SidebarProps) => {
 		</div>
 	);
 };
-
-export default Sidebar;
