@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import ProModal from "@/components/pro-modal";
 
-const ModalProvider = () => {
+export const ModalProvider = () => {
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
@@ -18,5 +18,3 @@ const ModalProvider = () => {
 		</>
 	);
 };
-
-export default ModalProvider;
